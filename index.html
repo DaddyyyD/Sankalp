@@ -9,6 +9,7 @@
     
     <style>
         :root {
+            /* Neumorphic Palette */
             --bg: #e6e9ef;
             --shadow-light: #ffffff;
             --shadow-dark: #b8bec9;
@@ -26,13 +27,13 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* The Sanskrit-style English Logo */
         .logo-font {
             font-family: 'Cinzel Decorative', cursive;
             position: relative;
             display: inline-block;
             letter-spacing: 2px;
         }
+        /* The Shirorekha (Horizontal line) across the top */
         .logo-font::after {
             content: '';
             position: absolute;
@@ -74,6 +75,7 @@
             pointer-events: none;
         }
 
+        /* Custom Checkbox Styling */
         input[type="checkbox"] {
             width: 22px; height: 22px;
             appearance: none;
@@ -88,10 +90,9 @@
             box-shadow: inset 2px 2px 4px var(--shadow-dark), inset -2px -2px 4px var(--shadow-light);
         }
         input[type="checkbox"]:checked::after {
-            content: 'L';
-            transform: rotate(45deg) scaleX(-1);
+            content: '✓';
             position: absolute;
-            left: 7px; top: 2px;
+            left: 5px; top: -1px;
             color: var(--accent);
             font-weight: 900;
             font-size: 14px;
@@ -127,39 +128,47 @@
 
     <main class="max-w-md mx-auto p-4 space-y-6">
 
-        <section class="neu-flat p-6 rounded-[2rem] space-y-4">
-            <div class="flex justify-between items-center">
-                <button onclick="changeDate(-1)" class="w-10 h-10 neu-btn rounded-full font-bold">←</button>
-                <div class="text-center">
-                    <span id="display-date" class="text-xs font-bold text-slate-500">Date</span>
-                    <h2 id="mission-day" class="text-sm font-black text-accent uppercase">Mission Day 1</h2>
+        <section class="neu-flat p-6 rounded-[2.5rem] space-y-5">
+            <div class="flex justify-between items-center border-b border-slate-200 pb-4">
+                <div>
+                    <p id="mission-day" class="text-[10px] uppercase font-black text-slate-400 tracking-widest mb-1">Day 01</p>
+                    <h2 id="display-date" class="text-xl font-bold text-slate-700">June 2, 2026</h2>
                 </div>
-                <button onclick="changeDate(1)" class="w-10 h-10 neu-btn rounded-full font-bold">→</button>
+                <div class="flex gap-2">
+                    <button onclick="changeDate(-1)" class="w-10 h-10 neu-btn rounded-full flex items-center justify-center">←</button>
+                    <button onclick="changeDate(1)" class="w-10 h-10 neu-btn rounded-full flex items-center justify-center">→</button>
+                </div>
             </div>
 
             <div class="grid grid-cols-2 gap-4">
-                <div class="neu-pressed p-4 rounded-2xl">
-                    <label class="text-[9px] uppercase text-slate-400 font-black block mb-1">Current Weight (kg)</label>
-                    <input type="number" id="weight-input" step="0.01" class="w-full bg-transparent border-none focus:outline-none text-xl font-black text-slate-700" placeholder="00.00" oninput="saveDailyData()">
+                <div class="neu-pressed p-4 rounded-3xl">
+                    <p class="text-[9px] uppercase font-black text-slate-400 mb-1">Current Mass</p>
+                    <div class="flex items-end gap-1">
+                        <input type="number" id="weight-input" step="0.01" class="w-full bg-transparent text-xl font-black text-slate-700 focus:outline-none" placeholder="00.0">
+                        <span class="text-xs font-bold text-slate-400">kg</span>
+                    </div>
                 </div>
-                <div class="neu-pressed p-4 rounded-2xl text-right">
-                    <label class="text-[9px] uppercase text-slate-400 font-black block mb-1">Consistency XP</label>
-                    <span id="xp-stat" class="text-xl font-black text-accent">0</span>
+                <div class="neu-pressed p-4 rounded-3xl">
+                    <p class="text-[9px] uppercase font-black text-slate-400 mb-1">Sadhana XP</p>
+                    <div class="flex items-end gap-1">
+                        <span id="xp-stat" class="text-xl font-black text-slate-700">0</span>
+                        <span class="text-xs font-bold text-slate-400">pts</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-[11px] font-black uppercase text-slate-400 tracking-widest">Phase Milestones</h3>
+                    <span id="active-phase-badge" class="bg-accent text-white text-[9px] font-black px-3 py-1 rounded-full uppercase tracking-tighter shadow-lg shadow-blue-200">Phase 1</span>
+                </div>
+                <div id="milestones-container" class="space-y-3">
+                    <!-- Milestones Injected -->
                 </div>
             </div>
         </section>
 
-        <section class="neu-flat p-6 rounded-[2rem]">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-[11px] font-black uppercase text-slate-400 tracking-widest">Active Milestones</h3>
-                <span id="active-phase-badge" class="text-[9px] font-black bg-blue-100 text-accent px-3 py-1 rounded-full uppercase">PHASE 1</span>
-            </div>
-            <div id="milestones-container" class="space-y-3">
-                <!-- Milestones Injected -->
-            </div>
-        </section>
-
-        <section class="neu-flat p-6 rounded-[2rem] space-y-4">
+        <section class="neu-flat p-6 rounded-[2.5rem] space-y-4">
             <h3 class="text-[11px] font-black uppercase text-slate-400 tracking-widest">Daily Quests</h3>
             <div id="quests-list" class="space-y-3">
                 <!-- Quests Injected -->
@@ -169,29 +178,28 @@
         <section id="details-display" class="space-y-6">
             <h2 id="phase-title" class="text-lg font-black text-slate-700 uppercase px-2 border-l-4 border-accent">1: Recovery Foundation</h2>
 
-            <div class="neu-flat p-6 rounded-[2rem] space-y-3">
+            <div class="neu-flat p-6 rounded-[2.5rem] space-y-3">
                 <h4 class="text-[11px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">🏋️ Training Protocol</h4>
                 <div id="training-content" class="text-xs leading-relaxed text-slate-600 space-y-2"></div>
             </div>
 
-            <div class="neu-flat p-6 rounded-[2rem] space-y-3">
+            <div class="neu-flat p-6 rounded-[2.5rem] space-y-3">
                 <h4 class="text-[11px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">🥗 Fuel & Belly Burn</h4>
                 <div id="fuel-content" class="text-xs leading-relaxed text-slate-600 space-y-2"></div>
             </div>
 
-            <div class="neu-pressed p-6 rounded-[2rem] border border-red-200">
+            <div class="neu-pressed p-6 rounded-[2.5rem] border border-red-200">
                 <h4 class="text-[11px] font-black text-red-400 uppercase tracking-widest flex items-center gap-2">🚫 Forbidden List</h4>
                 <div id="forbidden-content" class="text-xs italic leading-relaxed text-red-800/80 space-y-2"></div>
             </div>
         </section>
     </main>
 
-    <!-- Settings Modal -->
     <div id="settings-modal" class="fixed inset-0 bg-[#e6e9ef]/95 backdrop-blur-md z-[100] hidden flex items-center justify-center p-6">
         <div class="neu-flat p-8 rounded-[3rem] w-full max-w-xs space-y-6">
             <h2 class="text-xl font-black text-slate-700 text-center uppercase tracking-tighter">Initialize Sankalp</h2>
             <div>
-                <label class="text-[10px] uppercase font-bold text-slate-500 mb-2 block text-center">Trek Start Date</label>
+                <label class="text-[10px] uppercase font-bold text-slate-500 mb-2 block text-center">Mission Start Date</label>
                 <div class="neu-pressed p-3 rounded-xl">
                     <input type="date" id="start-date-input" class="w-full bg-transparent border-none text-center focus:outline-none">
                 </div>
@@ -300,6 +308,7 @@
             state.gates[key] = !state.gates[key];
             localStorage.setItem('sankalp_gates_v1', JSON.stringify(state.gates));
             
+            // Check if all milestones of current phase are met
             const currentMilestones = PHASES[state.unlockedPhase].milestones;
             let allMet = true;
             currentMilestones.forEach((_, idx) => {
@@ -361,6 +370,7 @@
             document.getElementById('fuel-content').innerHTML = viewPhase.fuel;
             document.getElementById('forbidden-content').innerHTML = viewPhase.forbidden;
 
+            // Load data for current date
             const log = state.history[state.currentDate] || { quests: {} };
             document.getElementById('weight-input').value = log.weight || "";
 
@@ -398,14 +408,25 @@
             });
             document.getElementById('xp-stat').innerText = xp;
 
+            // Check consistency (last 4 days)
             const today = new Date();
+            const missionStart = state.startDate ? new Date(state.startDate) : today;
             let missingCount = 0;
+            let daysChecked = 0;
+
             for(let i=0; i<4; i++) {
                 let d = new Date();
                 d.setDate(today.getDate() - i);
+                
+                // Only check days that are NOT in the future and NOT before the mission start date
+                if (d < missionStart) continue; 
+                
+                daysChecked++;
                 let ds = d.toISOString().split('T')[0];
                 const dayLog = state.history[ds];
                 const activeQuestsCount = PHASES[state.unlockedPhase].quests.length;
+                
+                // Count as missing if no log exists or less than half the quests are done
                 if (!dayLog || !dayLog.quests || Object.values(dayLog.quests).filter(v => v).length < (activeQuestsCount/2)) {
                     missingCount++;
                 }
@@ -413,7 +434,9 @@
 
             const statusDot = document.getElementById('status-dot');
             const statusText = document.getElementById('global-status');
-            if (missingCount >= 2) {
+            
+            // Logic: Fall behind only if you've been active for a bit and miss 50% of the days checked
+            if (daysChecked > 0 && missingCount > (daysChecked / 2)) {
                 statusDot.style.backgroundColor = 'var(--danger)';
                 statusText.innerText = "Status: Falling Behind";
                 statusText.classList.add('text-red-500');
